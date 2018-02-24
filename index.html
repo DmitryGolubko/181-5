@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Радиостанция Р-181. Тактико технические характеристики.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <link rel="stylesheet" href="main/container.css">
+    <link rel="stylesheet" href="main/elements.css">
+    <link rel="stylesheet" href="remoteCtrl.css"/>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="vendor/rotatable/jqueryrotate.js"></script>
+    <script src="vendor/jsPlumb-2.1.4.js"></script>
+    <script src="node_modules/moment/moment.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="main/script.js"></script>
+
+    <script src="app.js"></script>
+    <script src="remoteController/menu.js"></script>
+    <script src="remoteController/menuBars.js"></script>
+    <script src="remoteController/mainScreenConfig.js"></script>
+    <script src="remoteController/remoteControllerCtrl.js"></script>
+    <script src="remoteController/menuPC.js"></script>
+    <script src="main/blocksCtrl.js"></script>
+    <script src="main/elements.js"></script>
+</head>
+<body lang="ru" ng-app="stationApp">
+<div ng-controller="RemoteControllerCtrl">
+
+
+    <a href="tth.html" target="_blank" class="right-control-page tthPageButton controlPageButton main-control-btn">
+        <div>⟫</div>
+        <div>Открыть ТТХ</div>
+    </a>
+
+    <script>
+        function openNav() {
+            $(".main-control-btn").css("display", "none");
+            $(".sub-control-page").css("display", "block");
+            document.getElementById("mySidenav").style.width = "100%";
+        }
+
+        function closeNav() {
+            $(".main-control-btn").css("display", "block");
+            $(".sub-control-page").css("display", "none");
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+    <div id="jsPlumbContainer">
+        <div class="container" ng-controller="BlocksCtrl as bCtrl">
+            <div class="mid">
+                <div class="left">
+                    <span style="top: 280px; left: 215px;">РЕЖИМ</span>
+                    <span id="pc1-antenna-label" style="top: 75px; left: 250px;">АНТ</span>
+                    <div class="mode-switcher" id="pc1-mode-switcher">
+                        <div class="shadow-anim-white" style="border-radius:30px">
+                            <img src="img/main/elements/switch-round.png">
+                        </div>
+                        <p ng-class="switcherActiveStates" class="active-position mode-switcher-label position1">1</p>
+                        <p class="mode-switcher-label position2">2</p>
+                        <p class="mode-switcher-label position3">3</p>
+                        <p class="mode-switcher-label position4">4</p>
+                        <p class="mode-switcher-label position5">5</p>
+                        <p class="mode-switcher-label position6">6</p>
+                        <p class="mode-switcher-label position7">7</p>
+                        <p class="mode-switcher-label position8">8</p>
+                        <p class="mode-switcher-label position9">9</p>
+                        <p class="mode-switcher-label position10">10</p>
+                    </div>
+                </div>
+				<div class="center">
+				<div class="remoteController">
+                        <div class="indicators">
+                            <div class="indicator indicator-off" id="PR-indicator"></div>
+                            <div class="indicator indicator-off" id="PR-PRD-indicator"></div>
+                            <div class="indicator indicator-off" id="Error-indicator"></div>
+                        </div>
+                        <div class="display">
+                            <div class="upperRow" ng-show="power && state.pluggedPCCabel == cabels.PC.BARS">
+                                <div ng-show="isVolumeShown" class="volume-bar-title">{{volumeTitle}}</div>
+                                <div ng-show="isVolumeShown" class="volume-border-bar">
+                                    <div class="volume-bar"></div>
+                                </div>
+                            </div>
+                            <div class="workingArea" ng-show="power && state.pluggedPCCabel == cabels.PC.BARS">
+                                <div class="status-window">
+                                    <div class="top-menu-info">
+                                        
+                                    </div>
+                                    <div id="current-time">
+                                        {{getCurrentTime()}}
+                                    </div>
+                                </div>
+                                <div ng-hide="requireExternalDeviceScreen">
+                                    <hr/>
+                                    <div class="main-screen" ng-show="mainScreen">
+                                        
+                                        <table ng-hide="defaultMainScreen" class="additional-main-screen">
+                                            <tr>
+                                                <th align="left" valign="top">
+                                                    {{mainScreenView.leftInfo}}
+                                                </th>
+                                                <th align="left" valign="top">
+                                                    {{mainScreenView.rightInfo}}
+                                                </th>
+                                            </tr>
+                                        </table>
+										<table ng-show="defaultMainScreen" class="split-table">
+                                            <tr>
+                                                <th align="left" valign="top">
+                                                    <div ng-show="state.pc1Ready">
+                                                        <div class="main-screen-status-menu">
+                                                            <div>
+                                                                <img class="spec-image"
+                                                                     src="img/main/elements/symbol.PNG"/>
+                                                            </div>
+                                                            <div ng-show="mainScreenView.leftTLF">
+                                                                <img class="volume-image"
+                                                                     src="img/main/elements/volume.png"/>
+                                                            </div>
+                                                            <div ng-show="mainScreenView.leftAmplifier"
+                                                                 class="bg-yellow amplifier">У
+                                                            </div>
+                                                            <div class="channel-mode bg-yellow">
+                                                                {{mainScreenView.leftMode}}
+                                                            </div>
+                                                        </div>
+                                                        <div>{{mainScreenView.leftInfo}}</div>
+                                                    </div>
+                                                </th>
+                                                <th align="left" valign="top">
+                                                    <div ng-show="state.pc2Ready">
+                                                        <div class="main-screen-status-menu">
+                                                            <div>
+                                                                <img class="spec-image"
+                                                                     src="img/main/elements/symbol.PNG"/>
+                                                            </div>
+                                                            <div ng-show="mainScreenView.rightTLF">
+                                                                <img class="volume-image"
+                                                                     src="img/main/elements/volume.png"/>
+                                                            </div>
+                                                            <div ng-show="mainScreenView.rightAmplifier"
+                                                                 class="bg-yellow amplifier">У
+                                                            </div>
+                                                            <div class="channel-mode bg-yellow">
+                                                                {{mainScreenView.rightMode}}
+                                                            </div>
+                                                        </div>
+                                                        <div>{{mainScreenView.rightInfo}}</div>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div ng-hide="mainScreen">
+                                        <div class="modalContainer" ng-show="modal">
+                                            <div class="bar-title">{{title}}</div>
+                                            <div class="point-content">
+                                                <div class="point-value"
+                                                     ng-repeat="pointSymbol in pointValueSymbols track by $index">
+                                                    <div class="point-value-symbol"
+                                                         ng-class="{'selected' : $index == focusedPointValueSymbolNumber && editPoint == editablePointEnum.number}">
+                                                        {{pointSymbol}}
+                                                    </div>
+                                                </div>
+                                                <div class="point-variants"
+                                                     ng-repeat="variant in currentVariants track by $index">
+                                                    <div ng-class="{'selected' : $index == cursorPosition && editPoint == editablePointEnum.variants}">
+                                                        {{variant}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-show="hasBar" class="border-bar">
+                                                <div class="bar"></div>
+                                            </div>
+                                        </div>
+                                        <div class="content-container" ng-hide="modal">
+                                            <div ng-repeat="menuItem in menuView track by $index"
+                                                 ng-class="($index == cursorPosition) ? 'selected' : ''">
+                                                <div ng-click="goToNextPoint($index)" class="menu-item">
+                                                    <div>{{menuItem.menu_title || menuItem.title}}</div>
+                                                    <div>{{getStateViewValueByName(menuItem.param)}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="requireExternalDeviceScreen">
+                                    <p>ПУ заблокирован.</p>
+                                    <p>Подключено внешнее управляющее уст-во.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <ul ng-repeat="button in buttons">
+                                <li>
+                                    <img ng-repeat="buttonName in button"
+                                         ng-mousedown="setPressed($event)"
+                                         ng-mouseup="setUnpressed($event)"
+                                         ng-mouseleave="setUnpressed($event)"
+                                         ng-click="processClick(buttonName)"
+                                         ng-src="{{'img/controller/dynamic/' + buttonName+' ' + buttonState + '.png'}}"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+					</div>
+                <div class="right">
+                    <span id="pc1-toggler-on-label" style="top: 127px; left: 745px;">Вкл.</span>
+                    <span id="pc1-toggler-off-label" style="top: 170px; left: 740px;">Выкл.</span>
+                    <span id="pc1-int-label" style="top: 70px; left: 672px;">ИНТ</span>
+                    <span id="pc1-phone-label" style="top: 227px; left: 672px;">ТЛФ</span>
+
+                    <div class="toggler" id="pc1-toggler" ng-click="togglePC1Power()">
+                        <img class="toggler-on shadow-anim-white" src="img/main/elements/toggler-on-small.png" alt="">
+                        <img class="toggler-off shadow-anim-white" src="img/main/elements/toggler-off-small.png" alt="">
+                    </div>
+                    <div id="INT-mid-left-btn" class="btn-anim-white"></div>
+                    <div id="TLF-mid-left-btn" class="btn-anim-white"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

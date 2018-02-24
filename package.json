@@ -1,0 +1,16 @@
+{
+  "name": "station",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aliaksei_Farbotka",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "jquery": "^2.2.0",
+    "moment": "^2.18.1"
+  }
+}

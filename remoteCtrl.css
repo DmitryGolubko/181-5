@@ -1,0 +1,205 @@
+body{
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url(img/main/bg/bg.jpg);
+  background-size:cover;
+}
+
+@font-face {
+  font-family: "Font";
+  src: url(font.ttf) format("truetype");
+}
+
+
+section, main{
+  height: 90%;
+}
+.remoteController{
+  margin: auto;
+  height: 300px;
+  width: 354px;
+  background-size: contain;
+}
+
+.display{
+  width: 205px;
+  height: 105px;
+  overflow: hidden;
+  margin-left: 83px;
+  padding-top: 50px;
+  padding-bottom: 25px;
+  color: yellow;
+  font-size: 10px;
+  font-family: Font, sans-serif;
+}
+
+.display .upperRow{
+    height: 20px;
+    padding-bottom: 10px;
+    position: absolute;
+    width: inherit;
+ }
+.display .workingArea{
+  height: 105px;
+}
+
+.remoteController .buttons{
+  margin-left: 55px;
+  position: relative;
+  bottom: 0px;
+  width: 260px
+}
+
+.remoteController .buttons ul{
+  margin: 0;
+  padding: 0 2px;
+  display: inline-block;
+}
+
+.remoteController .buttons li{
+  height: 50px;
+  width: 39px;
+  background-size: 45px;
+  list-style-type: none;
+}
+
+.remoteController .buttons li img {
+  height: 80%;
+}
+
+.selected{
+  color: black;
+  background-color: yellow;
+  outline-style: none;
+}
+
+.border-bar {
+  margin: 60px 40px 0;
+  border: solid 2px yellow;
+  height: 8px;
+}
+
+.bar-title {
+  margin: 0 0 20px;
+  text-align: center;
+  height: 1.25em;
+}
+
+.bar {
+  height: 100%;
+  background-color: yellow;
+}
+
+
+.volume-border-bar {
+  display: inline-block;
+  width: 50%;
+  border: solid 2px yellow;
+  height: 50%;
+  box-sizing: border-box;
+}
+
+.volume-bar-title {
+  height: 50%;
+  font-size: 14px;
+  display: inline-block;
+  width: calc(50% - 1em);
+}
+
+.volume-bar {
+  height: 100%;
+  background-color: yellow;
+}
+
+.point-content{
+  text-align: center;
+}
+
+.modalContainer{
+    height: 100%;
+}
+
+.content-container{
+  overflow-y: auto;
+  height: 74px;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-container::-webkit-scrollbar{
+  width: 7px;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  background: yellow;
+  border: solid 2px black;
+}
+
+.content-container::-webkit-scrollbar-track-piece{
+
+  /*//transparent 50%, #a3e5a3 50%*/
+  background: rgba(3,3,3,0);
+  background: -moz-linear-gradient(left, rgba(0,0,0,0) 41%, rgba(255,255,26,1) 50%, rgba(0,0,0,0) 60%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(3,3,3,0)), color-stop(41%, rgba(210,210,22,0)), color-stop(50%, rgba(255,255,26,1)), color-stop(60%, rgba(255,255,26,0)));
+  background: -webkit-linear-gradient(left, rgba(3,3,3,0) 0%, rgba(210,210,22,0) 41%, rgba(255,255,26,1) 50%, rgba(255,255,26,0) 60%);
+  background: -o-linear-gradient(left, rgba(3,3,3,0) 0%, rgba(210,210,22,0) 41%, rgba(255,255,26,1) 50%, rgba(255,255,26,0) 60%);
+  background: -ms-linear-gradient(left, rgba(3,3,3,0) 0%, rgba(210,210,22,0) 41%, rgba(255,255,26,1) 50%, rgba(255,255,26,0) 60%);
+  background: linear-gradient(to right, rgba(3,3,3,0) 0%, rgba(210,210,22,0) 41%, rgba(255,255,26,1) 50%, rgba(255,255,26,0) 60%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#030303', endColorstr='#ffff1a', GradientType=1 );
+}
+
+.point-value{
+  display: inline-block;
+}
+
+.workingArea hr{
+    border-color:yellow;
+}
+
+.main-screen {
+    font-size:10px;
+}
+
+.main-screen table{
+    width:100%;
+    height:77px;
+}
+
+.main-screen table th{
+    padding:5px;
+}
+
+.main-screen table th:first-child{
+    width:50%;
+}
+
+.split-table th:first-child{
+    border-right: 2px yellow solid;
+}
+
+.additional-main-screen{
+    position:relative;
+    top:-22px;
+    white-space:pre-line;
+}
+
+.status-window{
+    font-size:12px;
+    min-height:12px;
+}
+
+.status-window div{
+    display:inline-block;
+}
+
+.point-value-symbol {
+    min-width: 7px;
+}
+
+#current-time{
+    float:right;
+}

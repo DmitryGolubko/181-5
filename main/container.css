@@ -1,0 +1,162 @@
+@font-face {
+    font-family: "Font";
+    src: url(../font.ttf) format("truetype");
+}
+
+
+.container {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 954px;
+    height: 335px;
+    padding: 0px 90px 10px 95px;
+    background-image: url("../img/main/bg/composite.png");
+    font-size: 0;
+    position: relative;
+	top: 120px;
+    margin: 0 auto;
+}
+
+img {
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+
+
+.container > div{
+    width: auto;
+    height: 300px;
+    font-size: 0;
+}
+
+.container .top {
+    margin: 0 0 120px 0;
+}
+
+.container .mid{
+    margin: 0 0 115px 0;
+}
+
+.container > div > div {
+    height: 100%;
+}
+
+.mode-switcher, .toggler, .indicator{
+    position: absolute;
+}
+
+.indicator {
+    height: 18px;
+    width: 18px;
+}
+
+
+.toggler{
+    position: absolute;
+    width: 46px;
+}
+
+.toggler-on{
+    display: none;
+}
+
+.mode-switcher{
+    height: 60px;
+    width: 60px;
+}
+
+.mode-switcher-label {
+    width: 2em;
+    position: absolute;
+    font-size: 14px;
+    color: #abb9bc;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+
+.container .top {
+    height: 300px;
+    display: inline-flex;
+}
+
+
+
+.container .top > div {
+    width: 272px;
+}
+
+.container .top > .center {
+    width: 230px;
+}
+
+.mid .right, .mid .left, .bott .right, .bott  .left  {
+    width: 200px;
+}
+
+.mid .center, .bott .center{
+    width: 354px;
+}
+
+.mid > div, .bott > div{
+    display: inline-block;
+}
+
+span{
+    font-size: 16px;
+    position: absolute;
+    color: #abb9bc;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-family: "Shruti", serif;
+}
+
+/* slide */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-image: url(../img/main/bg/bg.jpg);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    text-align:center;
+    background-size:cover;
+}
+
+/* slide */
+.characteristics {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    /*background-color: #111;*/
+    background-color: white;
+    overflow-x: hidden;
+    transition: linear 0.5s;
+    animation-direction: alternate-reverse;
+    padding-top: 60px;
+    text-align:center;
+}
+
+.closebtn {
+    position: absolute;
+    color: #f1f1f1;
+    top: 0;
+    right: 25px;
+    margin-left: 50px;
+}
+
+a:visited {
+    color: black;
+}
+
+/*slide*/

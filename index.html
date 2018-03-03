@@ -6,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
+	<link rel="stylesheet" href="remoteCtrl.css"/>
     <link rel="stylesheet" href="main/container.css">
     <link rel="stylesheet" href="main/elements.css">
-    <link rel="stylesheet" href="remoteCtrl.css"/>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -70,6 +70,7 @@
                         <p class="mode-switcher-label position9">9</p>
                         <p class="mode-switcher-label position10">10</p>
                     </div>
+					<div id="ANT-mid-left-btn" class="btn-anim-white"></div>
                 </div>
 				<div class="center">
 				<div class="remoteController">
@@ -188,11 +189,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div ng-show="requireExternalDeviceScreen">
-                                    <p>ПУ заблокирован.</p>
-                                    <p>Подключено внешнее управляющее уст-во.</p>
-                                </div>
-
                             </div>
                         </div>
                         <div class="buttons">
@@ -223,8 +219,10 @@
                     <div id="TLF-mid-left-btn" class="btn-anim-white"></div>
                 </div>
             </div>
-        </div>
-
+		</div>
+		<div class="battery" ng-controller="BlocksCtrl as bCtrl">
+			<div id="battery-btn" class="btn-anim-white"></div>
+		</div>
     </div>
 </div>
 </body>

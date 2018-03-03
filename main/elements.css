@@ -319,6 +319,15 @@ right
     border-radius:25px;
 }
 
+#ANT-mid-left-btn {
+    width: 90px;
+    height: 90px;
+    position: relative;
+    left: 54px;
+    top: 40px;
+    border-radius:50px;
+}
+
 #INT-bott-left-btn {
     width: 110px;
     height: 110px;
@@ -334,6 +343,15 @@ right
     position: relative;
     left: 57px;
     top: 68px;
+    border-radius:25px;
+}
+
+#battery-btn{
+    width: 850px;
+    height: 320px;
+    position: relative;
+    left: -40px;
+    top: 0px;
     border-radius:25px;
 }
 

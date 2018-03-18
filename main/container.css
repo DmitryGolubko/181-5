@@ -57,9 +57,6 @@ img {
     margin: 0 0 115px 0;
 }
 
-.container > div > div {
-    height: 100%;
-}
 
 .mode-switcher, .toggler, .indicator{
     position: absolute;

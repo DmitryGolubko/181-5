@@ -16,12 +16,12 @@ let MODE_MENU_MODE_SELECTION = {
     "access_rw": ["setting", "user"],
     "subpoints": {
         "0": {
-            "title": "ФРЧ",
+            "title": "ППРЧ",
             "param": "modeSwitcherFRCH",
             "access_r": ["review", "setting", "user"]
         },
         "1": {
-            "title": "ППРЧ",
+            "title": "ФРЧ",
             "access_r": ["review", "setting", "user"],
             "subpoints": {
                 "0": {

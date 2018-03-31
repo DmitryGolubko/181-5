@@ -7,9 +7,11 @@ var setAccessMenuRegex = /^setAccess.*/;
 var timeFormat = "HH:mm";
 var extendedTimeFormat = "YYYY.MM.DD HH:mm:ss";
 
+
 angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
 
+		$scope.isBatteryConnected = false;
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -260,8 +262,31 @@ angular.module('stationApp')
             $scope.mainPC2Power = !$scope.mainPC2Power;
             $scope.checkConnectedPCBlocksConditions()
         };
+		
+		$scope.toggleBattery = function() {
+			$scope.isBatteryConnected = !$scope.isBatteryConnected;
+			if (!$scope.isBatteryConnected) {
+				$scope.power = !$scope.power;
+			$scope.checkConnectedPCBlocksConditions();
+			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
+                $scope.buttonState = "on";
+            } else {
+                $scope.buttonState = "off";
+            };
+			
+			$scope.mainPC1Power = !$scope.mainPC1Power;
+			$scope.checkConnectedPCBlocksConditions();
+            $scope.pc1Power = !$scope.pc1Power;
+            $scope.checkConnectedPCBlocksConditions();
+			$scope.plugPCCable($scope.cabels.PC.BARS)
+			}
+		}
 
         $scope.togglePC1Power = function () {
+			if (!$scope.isBatteryConnected) {
+				alert("Подключите батарею");
+				return;
+			}
 			$scope.power = !$scope.power;
 			$scope.checkConnectedPCBlocksConditions();
 			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {

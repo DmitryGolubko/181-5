@@ -12,7 +12,6 @@ var power = false;
 
 angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
-
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -266,7 +265,7 @@ angular.module('stationApp')
             $scope.mainPC2Power = !$scope.mainPC2Power;
             $scope.checkConnectedPCBlocksConditions()
         };
-		
+	
 		$scope.plugAntenna = function() {
 			isAntennaConnected = !isAntennaConnected;
 		}

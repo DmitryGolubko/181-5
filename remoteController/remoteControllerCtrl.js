@@ -265,20 +265,8 @@ angular.module('stationApp')
 		
 		$scope.toggleBattery = function() {
 			$scope.isBatteryConnected = !$scope.isBatteryConnected;
-			if (!$scope.isBatteryConnected) {
-				$scope.power = !$scope.power;
-			$scope.checkConnectedPCBlocksConditions();
-			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
-                $scope.buttonState = "on";
-            } else {
-                $scope.buttonState = "off";
-            };
-			
-			$scope.mainPC1Power = !$scope.mainPC1Power;
-			$scope.checkConnectedPCBlocksConditions();
-            $scope.pc1Power = !$scope.pc1Power;
-            $scope.checkConnectedPCBlocksConditions();
-			$scope.plugPCCable($scope.cabels.PC.BARS)
+			if ($scope.isBatteryConnected && $scope.power) {
+				alert("Выключите станцию перед отключением батареи");
 			}
 		}
 

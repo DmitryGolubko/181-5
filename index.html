@@ -50,6 +50,9 @@
         }
     </script>
     <div id="jsPlumbContainer">
+		<div id="antenna" class="btn-anim-white" ng-click="plugAntenna()">
+			<img id="antenna-img" src="img/main/elements/antenna.png">
+		</div>
         <div class="container" ng-controller="BlocksCtrl as bCtrl">
             <div class="mid">
                 <div class="left">
@@ -181,7 +184,7 @@
                                         <div class="content-container" ng-hide="modal">
                                             <div ng-repeat="menuItem in menuView track by $index"
                                                  ng-class="($index == cursorPosition) ? 'selected' : ''">
-                                                <div ng-click="goToNextPoint($index)" class="menu-item">
+                                                <div class="menu-item">
                                                     <div>{{menuItem.menu_title || menuItem.title}}</div>
                                                     <div>{{getStateViewValueByName(menuItem.param)}}</div>
                                                 </div>
@@ -220,7 +223,8 @@
                 </div>
             </div>
 		</div>
-		<div class="battery" ng-click="toggleBattery()">
+		<div id="battery-connection-point"></div>
+		<div class="battery" ng-click="plugBattery()" >
 			<div id="battery-btn" class="btn-anim-white"></div>
 		</div>
     </div>

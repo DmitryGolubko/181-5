@@ -1,4 +1,6 @@
 ﻿var CABELS = {
+	ANT_main: false,
+	BAT_main: false,
     PU_main: false,
     PU_PC1: false,
     PU_PC2: false,
@@ -283,6 +285,25 @@ $(document).ready(function () {
                 CABELS.PU_PC2 = true;
             }  
         });
+		
+		$("#ANT-mid-left-btn").click(function () {
+			if (CABELS.ANT_main) {
+				jsPlumb.detachAllConnections("ANT-mid-left-btn");
+			} else {
+				createJoint("ANT-mid-left-btn", "antenna");
+			}
+			CABELS.ANT_main = !CABELS.ANT_main;
+		});
+		
+		$("#battery-btn").click(function () {
+			if (CABELS.BAT_main) {
+				jsPlumb.detachAllConnections("battery-btn");
+			} else {
+				createJoint("battery-btn", "battery-connection-point");
+			}
+			CABELS.BAT_main = !CABELS.BAT_main;
+		});
+		
 
         $("#INT-mid-left-btn").click(function () {
             if (CABELS.INT_PC1) {

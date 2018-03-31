@@ -12,6 +12,7 @@ angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
 
 		$scope.isBatteryConnected = false;
+		$scope.isAntennaConnected = false;
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -263,29 +264,24 @@ angular.module('stationApp')
             $scope.checkConnectedPCBlocksConditions()
         };
 		
-		$scope.toggleBattery = function() {
+		$scope.plugAntenna = function() {
+			$scope.isAntennaConnected = !scope.isAntennaConnected;
+		}
+		
+		$scope.plugBattery = function() {
 			$scope.isBatteryConnected = !$scope.isBatteryConnected;
-			if (!$scope.isBatteryConnected) {
-				$scope.power = !$scope.power;
-			$scope.checkConnectedPCBlocksConditions();
-			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
-                $scope.buttonState = "on";
-            } else {
-                $scope.buttonState = "off";
-            };
-			
-			$scope.mainPC1Power = !$scope.mainPC1Power;
-			$scope.checkConnectedPCBlocksConditions();
-            $scope.pc1Power = !$scope.pc1Power;
-            $scope.checkConnectedPCBlocksConditions();
-			$scope.plugPCCable($scope.cabels.PC.BARS)
+			if ($scope.isBatteryConnected && $scope.power) {
+				alert("Выключите станцию перед отключением батареи");
 			}
 		}
 
         $scope.togglePC1Power = function () {
-			if (!$scope.isBatteryConnected) {
+			if (!$scope.isBatteryConnected && $scope.buttonState == "off") {
 				alert("Подключите батарею");
 				return;
+			}
+			if (!$scope.isAntennaConnected) {
+				alert("Подключите антенну");
 			}
 			$scope.power = !$scope.power;
 			$scope.checkConnectedPCBlocksConditions();

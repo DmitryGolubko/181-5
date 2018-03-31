@@ -287,21 +287,26 @@ $(document).ready(function () {
         });
 		
 		$("#ANT-mid-left-btn").click(function () {
-			if (CABELS.ANT_main) {
+			if (isAntennaConnected) {
 				jsPlumb.detachAllConnections("ANT-mid-left-btn");
 			} else {
 				createJoint("ANT-mid-left-btn", "antenna");
 			}
-			CABELS.ANT_main = !CABELS.ANT_main;
+			isAntennaConnected = !isAntennaConnected;
 		});
 		
 		$("#battery-btn").click(function () {
-			if (CABELS.BAT_main) {
-				jsPlumb.detachAllConnections("battery-btn");
+			if (isBatteryConnected) {
+				if (!power) {
+					jsPlumb.detachAllConnections("battery-btn");
+				} else {
+					alert("Вылючите станцию перед отключением батареи");
+					return;
+				}				
 			} else {
 				createJoint("battery-btn", "battery-connection-point");
 			}
-			CABELS.BAT_main = !CABELS.BAT_main;
+			isBatteryConnected = !isBatteryConnected;
 		});
 		
 

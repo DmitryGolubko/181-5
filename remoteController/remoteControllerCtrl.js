@@ -6,13 +6,13 @@ var ipRegex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01
 var setAccessMenuRegex = /^setAccess.*/;
 var timeFormat = "HH:mm";
 var extendedTimeFormat = "YYYY.MM.DD HH:mm:ss";
-
+var isBatteryConnected = false;
+var isAntennaConnected = false;
+var power = false;
 
 angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
 
-		$scope.isBatteryConnected = false;
-		$scope.isAntennaConnected = false;
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -93,6 +93,8 @@ angular.module('stationApp')
             $scope.cursorPosition = 0;
             $scope.volume = 40; //percentage
             $scope.power = false;
+			//$scope.isBatteryConnected = false;
+			//$scope.isAntennaConnected = false;
             $scope.buttonState = "off";
             $scope.requireExternalDeviceScreen = false;
             $scope.keysBlocked = false;
@@ -249,6 +251,7 @@ angular.module('stationApp')
                 //$scope.buttonState = "on";
             }*/
             $scope.power = !$scope.power;
+			power = !power;
 
             $scope.checkConnectedPCBlocksConditions();
             $scope.checkButtonState();
@@ -265,24 +268,18 @@ angular.module('stationApp')
         };
 		
 		$scope.plugAntenna = function() {
-			$scope.isAntennaConnected = !scope.isAntennaConnected;
-		}
-		
-		$scope.plugBattery = function() {
-			$scope.isBatteryConnected = !$scope.isBatteryConnected;
-			if ($scope.isBatteryConnected && $scope.power) {
-				alert("Выключите станцию перед отключением батареи");
-			}
+			isAntennaConnected = !isAntennaConnected;
 		}
 
         $scope.togglePC1Power = function () {
-			if (!$scope.isBatteryConnected && $scope.buttonState == "off") {
+			if (!isBatteryConnected) {
 				alert("Подключите батарею");
 				return;
 			}
-			if (!$scope.isAntennaConnected) {
+			if (!isAntennaConnected) {
 				alert("Подключите антенну");
 			}
+			power = !power;
 			$scope.power = !$scope.power;
 			$scope.checkConnectedPCBlocksConditions();
 			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
@@ -322,7 +319,7 @@ angular.module('stationApp')
         };
 
         $scope.checkButtonState = function () {
-            if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
+            if (power && $scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
                 $scope.buttonState = "on";
             } else {
                 $scope.buttonState = "off";
@@ -330,7 +327,7 @@ angular.module('stationApp')
         };
 
         $scope.checkConnectedPCBlocksConditions = function () {
-            if (!$scope.power || $scope.state.pluggedPCCabel == $scope.cabels.PC.none) {
+            if ($scope.power || $scope.state.pluggedPCCabel == $scope.cabels.PC.none) {
                 $scope.state.pc1Ready = false;
                 $scope.state.pc2Ready = false;
                 return

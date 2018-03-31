@@ -1,4 +1,4 @@
-﻿/// <reference path="mainScreenConfig.js" />
+﻿// <reference path="mainScreenConfig.js" />
 var MAIN_SCREEN_CONFIG = {
     "param": "mainScreen",
     "leftInfo": "Канал №{0}\nВызов\nГруппа\n№{1}",

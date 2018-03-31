@@ -12,6 +12,7 @@ angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
 
 		$scope.isBatteryConnected = false;
+		$scope.isAntennaConnected = false;
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -263,6 +264,10 @@ angular.module('stationApp')
             $scope.checkConnectedPCBlocksConditions()
         };
 		
+		$scope.toggleAntenna = function() {
+			$scope.isAntennaConnected = !scope.isAntennaConnected;
+		}
+		
 		$scope.toggleBattery = function() {
 			$scope.isBatteryConnected = !$scope.isBatteryConnected;
 			if ($scope.isBatteryConnected && $scope.power) {
@@ -274,6 +279,9 @@ angular.module('stationApp')
 			if (!$scope.isBatteryConnected) {
 				alert("Подключите батарею");
 				return;
+			}
+			if (!$scope.isAntennaConnected && !$scope.power) {
+				alert("Подключите антенну");
 			}
 			$scope.power = !$scope.power;
 			$scope.checkConnectedPCBlocksConditions();

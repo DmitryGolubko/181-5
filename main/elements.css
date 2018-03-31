@@ -320,11 +320,11 @@ right
 }
 
 #ANT-mid-left-btn {
-	width: 80px;
-	height: 80px;
+	width: 82px;
+	height: 82px;
 	position: relative;
-	left: 54px;
-    top: 12px;
+	left: 59px;
+    top: 45px;
     border-radius:50px;
 }
 
@@ -355,7 +355,7 @@ right
 }
 
 #battery-btn {
-	width: 954px;
+	
     height: 315px;
 	position: relative;
 	border-radius:50px;
@@ -366,6 +366,16 @@ right
 	height: 1px;
 	left: 385px;
 	top: 330px;
+}
+
+#antenna {
+	width: 120px;
+	height: 130px;
+	border-radius: 30px;
+}
+#antenna-img {
+	width: 120px;
+	height: 130px;
 }
 
 #bott-left-mode-btn{

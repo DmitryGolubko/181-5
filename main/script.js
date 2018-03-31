@@ -286,13 +286,14 @@ $(document).ready(function () {
             }  
         });
 		
-		/*$("#ANT-mid-left-btn").click(function () {
+		$("#ANT-mid-left-btn").click(function () {
 			if (CABELS.ANT_main) {
 				jsPlumb.detachAllConnections("ANT-mid-left-btn");
 			} else {
-				createJoint("cable2", "INT-mid-left-btn");
+				createJoint("ANT-mid-left-btn", "antenna");
 			}
-		});*/
+			CABELS.ANT_main = !CABELS.ANT_main;
+		});
 		
 		$("#battery-btn").click(function () {
 			if (CABELS.BAT_main) {

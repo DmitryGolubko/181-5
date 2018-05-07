@@ -23,15 +23,22 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-
     width: 954px;
     height: 335px;
-    padding: 0px 90px 10px 95px;
-    background-image: url("../img/main/bg/composite.png");
+    padding: 0px 30px 0px 30px;
+    background-image: url("../img/main/bg/battery.png");
     font-size: 0;
     position: relative;
 	top: 100px;
     margin: 0 auto;
+}
+
+#battery-btn {
+    width: 100px;
+    height: 100px !important;
+    top: 115px;
+    left: 55px;
+    position: relative;
 }
 
 img {

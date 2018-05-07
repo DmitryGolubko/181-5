@@ -290,7 +290,7 @@ $(document).ready(function () {
 			if (isAntennaConnected) {
 				jsPlumb.detachAllConnections("ANT-mid-left-btn");
 			} else {
-				createJoint("ANT-mid-left-btn", "antenna");
+				createJoint("antenna", "ANT-mid-left-btn");
 			}
 			isAntennaConnected = !isAntennaConnected;
 		});
@@ -377,7 +377,7 @@ $(document).ready(function () {
             connector: ["Bezier", {curviness:200}],
             endpointStyle: { fillStyle: "rgba(222, 222, 222, 1)",radius:20},
             paintStyle:{outlineColor:"rgba(222, 222, 222, 0.4)", lineWidth:5},
-            anchors: ["Top", "Center"],
+            anchors: ["Center", "Center"],
         });
     }
 

@@ -97,11 +97,14 @@ $(document).ready(function () {
 
 
     function rotateElem(elem, currAngle, degree) {
-        elem.rotate({
-            duration: 1500,
-            angle: currAngle,
-            animateTo: degree
-        });
+        return new Promise((resolve, reject) => {
+            elem.rotate({
+                duration: 150,
+                angle: currAngle,
+                animateTo: degree,
+                callback: resolve
+            });
+        })
     }
 
 
@@ -120,7 +123,7 @@ $(document).ready(function () {
                 currMode = currMode < 0 ? currMode + 3 : currMode;
                 currMode = currMode > 3 ? currMode - 4 : currMode;
                 mainMode = currMode;
-                pressedMainModeSwitcher = false;
+                pressedMainModeSwitcher = false;               
             }
         }
     }
@@ -152,13 +155,15 @@ $(document).ready(function () {
                         animateTo: currAngle + 3600000,
                         duration: 60000000
                     });
-                    isModeSwitcherPressed = true;
+                    isModeSwitcherPressed = true;   
                 }
             }
         });
-
         $(selector).bind("mouseup", function (evt) {
-            middleModeSwitcherHandler(evt, typeOfSwitcher);
+            middleModeSwitcherHandler(evt, typeOfSwitcher).then(() => {
+                angular.element('#remoteController').scope().updateMainScreen();
+                angular.element('#remoteController').scope().$apply();
+            });
         });
 
         $(selector).bind("mouseleave", function (evt) {
@@ -174,22 +179,24 @@ $(document).ready(function () {
                     var currAngle = elemId.getRotateAngle()[0] % 360;
                     var oneGap = 36;
                     var pointedMode = Math.round(currAngle / oneGap);
-                    rotateElem(elemId, currAngle, pointedMode * oneGap + defaultSwitcherAngle % oneGap);
-                    currAngle = elemId.getRotateAngle()[0] % 360;
-                    var tempAngle = currAngle < defaultSwitcherAngle ? 360 + currAngle - defaultSwitcherAngle : currAngle - defaultSwitcherAngle;
-                    var currMode = Math.round(tempAngle / oneGap);
-                    currMode = currMode < 0 ? currMode + 11 : currMode + 1;
-                    // start with 1
+                    return rotateElem(elemId, currAngle, pointedMode * oneGap + defaultSwitcherAngle % oneGap).
+                        then(() => {
+                            currAngle = elemId.getRotateAngle()[0] % 360;
+                            var tempAngle = currAngle < defaultSwitcherAngle ? 360 + currAngle - defaultSwitcherAngle : currAngle - defaultSwitcherAngle;
+                            var currMode = Math.round(tempAngle / oneGap);
+                            currMode = currMode < 0 ? currMode + 11 : currMode + 1;
+                            // start with 1
 
-                    currMode = currMode > 10 ? currMode - 10 : currMode;
-                    if (typeOfSwitcher == "pc1") {
-                        pc1Mode = currMode;
-                    }
-                    else if (typeOfSwitcher == "pc2") {
-                        pc2Mode = currMode;
-                    }
-                    isModeSwitcherPressed = false;
-                    $(selector).parent().find(".position" + currMode).addClass(cls.activePosition);
+                            currMode = currMode > 10 ? currMode - 10 : currMode;
+                            if (typeOfSwitcher == "pc1") {
+                                pc1Mode = currMode;
+                            }
+                            else if (typeOfSwitcher == "pc2") {
+                                pc2Mode = currMode;
+                            }
+                            isModeSwitcherPressed = false;
+                            $(selector).parent().find(".position" + currMode).addClass(cls.activePosition);
+                        });
                 }
             }
         }

@@ -182,7 +182,8 @@ let MODE_MENU_STANDBY_MODE = {
 };
 
 let MODE_MENU_APPLY = {
-    "title": "Применить"
+    "title": "Применить",
+    "param": "save"
 };
 
 let MODE_MENU_MODULATION = {

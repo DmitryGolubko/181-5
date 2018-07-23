@@ -12,6 +12,7 @@ var power = false;
 
 angular.module('stationApp')
     .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
+        $scope.savedSettings = [];
         var hasSubpoints = true;
         $scope.isPoint = false;
         $scope.defaultMainScreen = true;
@@ -38,7 +39,7 @@ angular.module('stationApp')
 
         $scope.isVolumeShown = false;
         $scope.volumeTitle = VOLUME_TITLE;
-        $scope.statusMenuView = {workingMode: "", blockSelected: ""};
+        $scope.statusMenuView = { workingMode: "", blockSelected: "" };
 
         $scope.cls = {
             display: "display",
@@ -48,7 +49,7 @@ angular.module('stationApp')
             pointValueSymbol: "point-value-symbol",
             selected: "selected",
             contentContainer: "content-container",
-            statusWindow:"status-window"
+            statusWindow: "status-window"
         };
 
         $scope.validations = {
@@ -92,8 +93,8 @@ angular.module('stationApp')
             $scope.cursorPosition = 0;
             $scope.volume = 40; //percentage
             $scope.power = false;
-			//$scope.isBatteryConnected = false;
-			//$scope.isAntennaConnected = false;
+            //$scope.isBatteryConnected = false;
+            //$scope.isAntennaConnected = false;
             $scope.buttonState = "off";
             $scope.requireExternalDeviceScreen = false;
             $scope.keysBlocked = false;
@@ -107,7 +108,7 @@ angular.module('stationApp')
         };
 
         $scope.createBlockSettings = function () {
-            $scope.blockSettings = {"PC1": {}, "PC2": {}};
+            $scope.blockSettings = { "PC1": {}, "PC2": {} };
             for (var i = 0; i < 10; i++) {
                 $scope.blockSettings["PC1"][i] = {
                     settingsPcBlockIpAddress: "000.000.000.000",
@@ -140,7 +141,7 @@ angular.module('stationApp')
         $scope.updateMainScreen = function () {
             var data = MAIN_SCREEN_CONFIG;
             var blockSelected = $scope.state.blockSelected;
-            data = MAIN_SCREEN_CONFIG_PC;
+            data = JSON.parse(JSON.stringify(MAIN_SCREEN_CONFIG_PC));
             $scope.defaultMainScreen = false;
             data.leftInfo = data.leftInfo.replace(CONFIG_CONSTS.chanel, pc1Mode);
             data.leftInfo = data.leftInfo.replace(CONFIG_CONSTS.group, $scope.state['groupNumber'])
@@ -153,7 +154,7 @@ angular.module('stationApp')
             $scope.mainScreenView.rightAmplifier = CABELS.INT_PC2;
             $scope.mainScreenView.leftTLF = CABELS.TLF_PC1;
             $scope.mainScreenView.rightTLF = CABELS.TLF_PC2;
-			$scope.state.blockSelected = BLOCKS.PC1;
+            $scope.state.blockSelected = BLOCKS.PC1;
         };
 
         $scope.updateAll = function () {
@@ -183,8 +184,31 @@ angular.module('stationApp')
                     $scope.menuAccess.push(data[i]);
                 }
             }
+
+            if (!angular.isUndefined(data)) {
+                if ((data[0].param == "channelNumber") && ($scope.savedSettings.length !== 0)) {
+                    for (var i = $scope.savedSettings.length - 1; i >= 0; i--) {
+                        if ($scope.savedSettings[i][0][1] == $scope.getStateViewValueByName(data[0].param)) {
+                            console.log("Loading settings");
+                            $scope.menuView = [];
+                            $scope.menuAccess = [];
+                            for (var j = 0; j < $scope.savedSettings[i].length; j++) {
+                                $scope.menuView.push($scope.savedSettings[i][j][0]);
+                                let allowedAccessUsers = getAllowedAccessUsers($scope.savedSettings[i][j][0]);
+                                if (allowedAccessUsers.includes($scope.userType)) {
+                                    $scope.menuAccess.push($scope.savedSettings[i][j][0]);
+                                }
+                                //values push to $scope.state[param]
+                                $scope.state[$scope.savedSettings[i][j][0].param] = $scope.savedSettings[i][j][1]
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
             $scope.cursorPosition = 0;
             $scope.updateMainScreen();
+            console.log($scope.menuAccess);
         };
 
         $scope.getCurrentMoment = function () {
@@ -250,7 +274,7 @@ angular.module('stationApp')
                 //$scope.buttonState = "on";
             }*/
             $scope.power = !$scope.power;
-			power = !power;
+            power = !power;
 
             $scope.checkConnectedPCBlocksConditions();
             $scope.checkButtonState();
@@ -265,33 +289,33 @@ angular.module('stationApp')
             $scope.mainPC2Power = !$scope.mainPC2Power;
             $scope.checkConnectedPCBlocksConditions()
         };
-	
-		$scope.plugAntenna = function() {
-			isAntennaConnected = !isAntennaConnected;
-		}
+
+        $scope.plugAntenna = function () {
+            isAntennaConnected = !isAntennaConnected;
+        }
 
         $scope.togglePC1Power = function () {
-			if (!isBatteryConnected) {
-				alert("Подключите батарею");
-				return;
-			}
-			if (!isAntennaConnected) {
-				alert("Подключите антенну");
-			}
-			power = !power;
-			$scope.power = !$scope.power;
-			$scope.checkConnectedPCBlocksConditions();
-			if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
+            if (!isBatteryConnected) {
+                alert("Подключите батарею");
+                return;
+            }
+            if (!isAntennaConnected) {
+                alert("Подключите антенну");
+            }
+            power = !power;
+            $scope.power = !$scope.power;
+            $scope.checkConnectedPCBlocksConditions();
+            if ($scope.power && $scope.state.pluggedPCCabel == $scope.cabels.PC.BARS) {
                 $scope.buttonState = "on";
             } else {
                 $scope.buttonState = "off";
             };
-			
-			$scope.mainPC1Power = !$scope.mainPC1Power;
-			$scope.checkConnectedPCBlocksConditions();
+
+            $scope.mainPC1Power = !$scope.mainPC1Power;
+            $scope.checkConnectedPCBlocksConditions();
             $scope.pc1Power = !$scope.pc1Power;
             $scope.checkConnectedPCBlocksConditions();
-			$scope.plugPCCable($scope.cabels.PC.BARS)
+            $scope.plugPCCable($scope.cabels.PC.BARS)
         };
 
         $scope.togglePC2Power = function () {
@@ -449,7 +473,7 @@ angular.module('stationApp')
 
         $scope.getPCMode = function (blockSelected) {
             if (blockSelected == undefined) {
-                blockSelected =  $scope.state.blockSelected;
+                blockSelected = $scope.state.blockSelected;
             }
             return $scope.state.pcMode[blockSelected];
         };
@@ -500,6 +524,9 @@ angular.module('stationApp')
             }
 
             let symbolsCopy = $scope.pointValueSymbols.slice();
+            if (currentPoint.param == "channelNumber" && $scope.pointValueSymbols[0] == "0" && $scope.pointValueSymbols.length > 1) {
+                symbolsCopy == $scope.pointValueSymbols.shift();
+            }
             let validationPattern = currentPoint["validationPattern"];
             if (validationPattern == $scope.validations.ipAddress) {
                 symbolsCopy[$scope.focusedPointValueSymbolNumber] = number;
@@ -531,7 +558,11 @@ angular.module('stationApp')
                     symbolsCopy.push(number);
                     $scope.focusedPointValueSymbolNumber++;
                 } else {
-                    symbolsCopy[$scope.focusedPointValueSymbolNumber] = number;
+                    if ($scope.focusedPointValueSymbolNumber == 0 && number == "0" && currentPoint.param == "channelNumber" && symbolsLen > 1) {
+                        symbolsCopy.shift()
+                    } else {
+                        symbolsCopy[$scope.focusedPointValueSymbolNumber] = number;
+                    }
                 }
 
                 let value = symbolsCopy.join('');
@@ -579,6 +610,17 @@ angular.module('stationApp')
         };
 
         $scope.pressedEnterButton = function () {
+            if (!angular.isUndefined($scope.menuView[$scope.cursorPosition])) {
+                if ($scope.menuView[$scope.cursorPosition].param == "save") {
+
+                    var settings = [];
+                    for (var i = 0; i < $scope.menuView.length; i++) {
+                        settings.push([$scope.menuView[i], $scope.getStateViewValueByName($scope.menuView[i].param)])
+                    }
+                    $scope.savedSettings.push(settings)
+                }
+            }
+
             var currentPoint = getByParamName($scope.currentPointParam,
                 $scope.state.blockSelected, $scope.getPCMode());
 
@@ -767,7 +809,7 @@ angular.module('stationApp')
                 }
 
                 return menuInfo
-            } else if(param == 'channelMode') {
+            } else if (param == 'channelMode') {
                 let digitalModes = [PC_MODES.PPRCH_SLAVE, PC_MODES.PPRCH_MASTER, PC_MODES.DIGITAL];
                 let analogModes = [PC_MODES.SCAN, PC_MODES.FIXED_CHANNEL];
                 if (digitalModes.includes($scope.getPCMode())) {

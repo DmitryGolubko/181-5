@@ -208,7 +208,6 @@ angular.module('stationApp')
             }
             $scope.cursorPosition = 0;
             $scope.updateMainScreen();
-            console.log($scope.menuAccess);
         };
 
         $scope.getCurrentMoment = function () {
@@ -487,6 +486,32 @@ angular.module('stationApp')
             var img = $event.target;
             img.src = img.src.replace("pressed.", "on.");
         };
+
+        $scope.KeyboardClick = function ($event) {  
+            let possibleEvents = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "ENTER", "ARROWDOWN", "ARROWUP", "ARROWLEFT", "ARROWRIGHT"]
+            if (possibleEvents.indexOf($event.key.toUpperCase()) !== -1)  {
+                if ($event.key.toUpperCase().startsWith("ARROW")) {
+                    $scope.processClick([$event.key.toUpperCase().slice(0, 5), " ", $event.key.toUpperCase().slice(5)].join('')) 
+                } else {
+                    $scope.processClick($event.key.toUpperCase())
+                } 
+            } else {
+                switch ($event.key.toUpperCase()) {
+                    case "BACKSPACE" :
+                        $scope.processClick("STAR");
+                        break;
+                    case "ESCAPE" :
+                        $scope.processClick("STAR");
+                        break;
+                    case "+":
+                        $scope.processClick("VOLUME UP");
+                        break;
+                    case "-":
+                        $scope.processClick("VOLUME DOWN");
+                        break;
+                }
+            }
+        }
 
         $scope.changeVolume = function (type) {
             if (RegExp("UP").test(type)) {

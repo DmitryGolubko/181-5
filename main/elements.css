@@ -518,3 +518,60 @@ right
 .right-control-page:hover{
     right:0px !important;
 }
+
+.task-description {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    z-index: 10;
+    background-color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.task-description__title {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.task-description__text {
+    margin-top: 10px;
+}
+
+.task-description__start-button {
+    outline: none;
+    font-size: 30px;
+    background-color: aquamarine;
+    position: relative;
+    margin-top: 10px;
+}
+
+.trainerTimer {
+    position: fixed;
+    right: 70px;
+    line-height: 45px;
+    width: 100px;
+    height: 45px;
+    background-color: white;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.finish-task-button {
+    outline: none;
+    font-size: 30px;
+    background-color: aquamarine;
+    margin-top: 10px;
+    position: fixed;
+    right: 200px;
+    line-height: 45px;
+    width: 200px;
+    height: 45px;
+    text-align: center;
+    border-radius: 10px;
+}

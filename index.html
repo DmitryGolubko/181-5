@@ -29,12 +29,33 @@
 </head>
 <body lang="ru" ng-app="stationApp">
 <div ng-controller="RemoteControllerCtrl">
-
-
+    
+    
     <a href="tth.html" target="_blank" class="right-control-page tthPageButton controlPageButton main-control-btn" style="right: -192px;">
         <div>⟫</div>
         <div>Открыть ТТХ</div>
     </a>
+
+    <div class="task-description" ng-show="showTaskDescription">
+        <div class="task-description__title">
+            Задание
+        </div>
+        <div class="task-description__text">
+            Описание задания
+        </div>
+            <button class="task-description__start-button" ng-click="startTrainer()" ng-hide="trainerStarted">
+                Старт
+            </button>
+    </div>
+
+    <!-- TODO create functions for mouseleave and mouseenter events -->
+    <div class="trainerTimer" ng-mouseenter="showTaskDescription = true" ng-mouseleave="showTaskDescription = !trainerStarted">
+        {{minutesSpent}}:{{secondsSpent}}
+    </div>
+
+    <button class="finish-task-button" ng-click="finishTrainer()" ng-hide="!trainerStarted">
+        Завершить
+    </button> 
 
     <script>
         function openNav() {

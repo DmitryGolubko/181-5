@@ -161,7 +161,7 @@ $(document).ready(function () {
         });
         $(selector).bind("mouseup", function (evt) {
             middleModeSwitcherHandler(evt, typeOfSwitcher).then(() => {
-                angular.element('#remoteController').scope().updateMainScreen();
+                angular.element('#remoteController').scope().updateAll();
                 angular.element('#remoteController').scope().$apply();
             });
         });

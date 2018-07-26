@@ -11,7 +11,12 @@ var isAntennaConnected = false;
 var power = false;
 
 angular.module('stationApp')
-    .controller('RemoteControllerCtrl', function ($scope, $window, $timeout) {
+    .controller('RemoteControllerCtrl', function ($scope, $window, $timeout, $interval) {
+        $scope.trainerStarted = false;
+        $scope.trainerFinished = false;
+        $scope.showTaskDescription = true;
+        $scope.minutesSpent = 0;
+        $scope.secondsSpent = 0;
         $scope.savedSettings = [];
         var hasSubpoints = true;
         $scope.isPoint = false;
@@ -155,6 +160,7 @@ angular.module('stationApp')
             $scope.mainScreenView.leftTLF = CABELS.TLF_PC1;
             $scope.mainScreenView.rightTLF = CABELS.TLF_PC2;
             $scope.state.blockSelected = BLOCKS.PC1;
+            console.log($scope.state)
         };
 
         $scope.updateAll = function () {
@@ -164,6 +170,7 @@ angular.module('stationApp')
         }
 
         $scope.getMenu = function () {
+            //console.log($scope.mainScreenView.leftMode)
             $scope.isPoint = false;
             $scope.modal = false;
             var data = getData($scope.state.blockSelected, $scope.getPCMode());
@@ -184,7 +191,7 @@ angular.module('stationApp')
                     $scope.menuAccess.push(data[i]);
                 }
             }
-
+            //$scope.state.channelNumber = $scope.mainScreenView.leftMode
             if (!angular.isUndefined(data)) {
                 if ((data[0].param == "channelNumber") && ($scope.savedSettings.length !== 0)) {
                     for (var i = $scope.savedSettings.length - 1; i >= 0; i--) {
@@ -865,6 +872,30 @@ angular.module('stationApp')
         function resetPointBuffers() {
             $scope.pointValueSymbols = [];
             $scope.currentVariants = [];
+        }
+
+        $scope.startTrainer = function () {
+            $scope.trainerStarted = true;
+            $scope.showTaskDescription = false;
+            startTimer();
+        };
+
+        $scope.finishTrainer = function () {
+            $scope.trainerFinished = true;
+        }
+
+        function startTimer() {
+            let trainerStartTime = new Date().getTime();
+            $interval(function() {
+                if ($scope.trainerFinished) {
+                    return;
+                } else {
+                    let now = new Date().getTime();
+                    let timeSpent = now - trainerStartTime;
+                    $scope.minutesSpent = Math.floor((timeSpent % (1000 * 60 * 60)) / (1000 * 60));
+                    $scope.secondsSpent = Math.floor((timeSpent % (1000 * 60)) / 1000);
+                }
+            }, 1000);
         }
 
         $scope.init();
